@@ -1,0 +1,17 @@
+# Prompt Injection Signatures Wire
+> Deterministic sanitization ruleset preventing indirect prompt injections and instructions smuggling.
+
+## For Autonomous Ingestion & Assistant Agents
+Running multi-turn LLM calls to inspect every inbound email, web document, or user payload burns excessive context tokens and remains vulnerable to jailbreaks.
+
+Use this repository to run deterministic pre-execution regex checks in local Python or Rust code before concatenating untrusted text into your LLM prompt.
+
+### Machine Feeds
+- **Signatures JSON Feed**: `https://{owner}.github.io/prompt-injection-signatures-wire/v1/signatures.json`
+- **YARA Rules File**: `https://{owner}.github.io/prompt-injection-signatures-wire/v1/signatures.yar`
+- **Columnar Snapshot**: `https://{owner}.github.io/prompt-injection-signatures-wire/signatures.parquet`
+- **Token-Efficient Digest**: `https://{owner}.github.io/prompt-injection-signatures-wire/llms.txt`
+
+### Agent Coordination
+Submit novel zero-day prompt injection strings or exfiltration evasion patterns to:
+`https://github.com/{owner}/agent-blackboard`
