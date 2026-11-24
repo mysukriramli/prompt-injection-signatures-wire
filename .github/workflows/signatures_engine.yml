@@ -24,17 +24,17 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - name: Check out repository
+      - name: Check Out Repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Set up Python
+      - name: Set Up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
 
@@ -59,72 +59,72 @@ jobs:
             echo "signature_engine.py not found"
           fi
 
-      - name: Ensure Pages Directory Exists
+      - name: Create Pages Directory
         run: |
+          rm -rf public
+
           mkdir -p public
+
           touch public/.nojekyll
 
-      - name: Create Fallback Index Page
+      - name: Generate Fallback Dashboard
         run: |
-          if [ ! -f public/index.html ]; then
+          echo '<!DOCTYPE html>' > public/index.html
+          echo '<html lang="en">' >> public/index.html
+          echo '<head>' >> public/index.html
+          echo '<meta charset="UTF-8">' >> public/index.html
+          echo '<meta name="viewport" content="width=device-width, initial-scale=1">' >> public/index.html
+          echo '<title>Prompt Injection Signatures Engine</title>' >> public/index.html
+          echo '<style>' >> public/index.html
+          echo 'body{' >> public/index.html
+          echo 'font-family:system-ui,sans-serif;' >> public/index.html
+          echo 'margin:40px;' >> public/index.html
+          echo 'background:#0f172a;' >> public/index.html
+          echo 'color:#ffffff;' >> public/index.html
+          echo '}' >> public/index.html
+          echo '.card{' >> public/index.html
+          echo 'max-width:900px;' >> public/index.html
+          echo 'margin:auto;' >> public/index.html
+          echo 'padding:24px;' >> public/index.html
+          echo 'border-radius:12px;' >> public/index.html
+          echo 'background:#111827;' >> public/index.html
+          echo '}' >> public/index.html
+          echo 'h1{' >> public/index.html
+          echo 'color:#22c55e;' >> public/index.html
+          echo '}' >> public/index.html
+          echo '</style>' >> public/index.html
+          echo '</head>' >> public/index.html
+          echo '<body>' >> public/index.html
+          echo '<div class="card">' >> public/index.html
+          echo '<h1>Prompt Injection Signatures Engine</h1>' >> public/index.html
+          echo '<p>Signature compilation service running.</p>' >> public/index.html
+          echo '<p>Historical ledger successfully published.</p>' >> public/index.html
+          echo '<p>Generated automatically by GitHub Actions.</p>' >> public/index.html
+          echo '</div>' >> public/index.html
+          echo '</body>' >> public/index.html
+          echo '</html>' >> public/index.html
 
-            echo '<!DOCTYPE html>' > public/index.html
-            echo '<html lang="en">' >> public/index.html
-            echo '<head>' >> public/index.html
-            echo '  <meta charset="UTF-8">' >> public/index.html
-            echo '  <meta name="viewport" content="width=device-width, initial-scale=1">' >> public/index.html
-            echo '  <title>Prompt Injection Signatures Engine</title>' >> public/index.html
-            echo '  <style>' >> public/index.html
-            echo '    body {' >> public/index.html
-            echo '      margin: 40px;' >> public/index.html
-            echo '      font-family: system-ui, sans-serif;' >> public/index.html
-            echo '      background: #0f172a;' >> public/index.html
-            echo '      color: #ffffff;' >> public/index.html
-            echo '    }' >> public/index.html
-            echo '    .card {' >> public/index.html
-            echo '      max-width: 900px;' >> public/index.html
-            echo '      margin: auto;' >> public/index.html
-            echo '      padding: 24px;' >> public/index.html
-            echo '      border-radius: 12px;' >> public/index.html
-            echo '      background: #111827;' >> public/index.html
-            echo '    }' >> public/index.html
-            echo '    h1 {' >> public/index.html
-            echo '      color: #22c55e;' >> public/index.html
-            echo '    }' >> public/index.html
-            echo '  </style>' >> public/index.html
-            echo '</head>' >> public/index.html
-            echo '<body>' >> public/index.html
-            echo '  <div class="card">' >> public/index.html
-            echo '    <h1>Prompt Injection Signatures Engine</h1>' >> public/index.html
-            echo '    <p>Signature compilation service running.</p>' >> public/index.html
-            echo '    <p>Historical ledger successfully published.</p>' >> public/index.html
-            echo '    <p>Generated automatically by GitHub Actions.</p>' >> public/index.html
-            echo '  </div>' >> public/index.html
-            echo '</body>' >> public/index.html
-            echo '</html>' >> public/index.html
-
-          fi
-
-      - name: Validate Generated Site
+      - name: Validate Pages Directory
         run: |
-          echo "===== PUBLIC DIRECTORY ====="
+          set -e
+
+          echo "===== PUBLIC FILES ====="
+
           find public -type f
-
-          echo ""
-          echo "===== INDEX CHECK ====="
 
           test -d public
           test -f public/index.html
+          test -s public/index.html
 
-          wc -c public/index.html
+          echo "index.html validation passed"
 
       - name: Commit and Push Historical Ledger
         run: |
           git config user.name "metastream-bot[bot]"
           git config user.email "metastream-bot@users.noreply.github.com"
 
-          [ -d data/history ] && git add data/history/ || true
-          [ -d public ] && git add public/ || true
+          [ -d data/history ] && git add data/history || true
+          [ -d public ] && git add public || true
 
           if git diff --cached --quiet; then
 
@@ -143,32 +143,19 @@ jobs:
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Verify Artifact Contents
+      - name: Verify Pages Payload
         run: |
-          echo "===== FINAL ARTIFACT ====="
+          echo "===== DEPLOYMENT PAYLOAD ====="
 
           find public -type f
 
-          if [ ! -f public/index.html ]; then
-            echo "ERROR: public/index.html missing"
-            exit 1
-          fi
-
-          if [ ! -s public/index.html ]; then
-            echo "ERROR: public/index.html empty"
-            exit 1
-          fi
-
-          echo "Artifact validation passed"
+          test -f public/index.html
+          test -s public/index.html
 
       - name: Upload GitHub Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./public
-
-      - name: Confirm Artifact Upload Step
-        run: |
-          echo "GitHub Pages artifact upload completed"
 
       - name: Deploy to GitHub Pages
         id: deployment
@@ -176,8 +163,8 @@ jobs:
 
       - name: Deployment Summary
         run: |
-          echo "=================================="
+          echo "===================================="
           echo "Prompt Injection Signatures Engine"
-          echo "Deployment complete"
-          echo "=================================="
+          echo "Deployment Complete"
+          echo "===================================="
           echo "${{ steps.deployment.outputs.page_url }}"
