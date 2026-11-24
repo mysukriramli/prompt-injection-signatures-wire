@@ -1,6 +1,6 @@
 /*
  * Prompt Injection & Agent Override YARA Ruleset
- * Generated UTC: 2026-11-24T01:06:22.355122+00:00
+ * Generated UTC: 2026-11-24T19:41:42.005347+00:00
  */
 
 rule INJ_BIDI_005 : bidi_override {
