@@ -1,0 +1,21 @@
+# Prompt Injection Signatures Wire
+> Last Sync: 2026-11-24T01:06:22.354262+00:00 UTC
+> Deterministic sanitization ruleset for autonomous agents (Zero LLM tokens burned for input triage).
+
+## Active Injection Detection Signatures
+- **[MEDIUM] INJ-BIDI-005** (bidi_override): Bidirectional text control overrides altering perceived token layout and agent instruction flow.
+  `Pattern: [\u202A-\u202E\u2066-\u2069]`
+- **[MEDIUM] INJ-OBF-008** (encoding_evasion): Secondary obfuscation wrapper forcing LLM to decode embedded payload before execution.
+  `Pattern: (?i)(?:base64\s+decode\s+this\s+instruction|rot13|execute\s+this\s+hex\s+string)`
+- **[HIGH] INJ-EXF-003** (markdown_data_exfiltration): Zero-click markdown image embedding targeting data extraction via URL query parameters.
+  `Pattern: (?i)!\[.*?\]\(https?:\/\/[^\s\)]+(?:\?|&)(?:token|key|secret|cookie|auth|pwd|data|leak)=.*?(?:\$|\{).*?\)`
+- **[HIGH] INJ-JAIL-006** (jailbreak_persona): Roleplay jailbreak patterns attempting persona-based ethical guardrail circumvention.
+  `Pattern: (?i)(?:you\s+are\s+now\s+(?:DAN|unrestricted|jailbroken|an\s+unaligned\s+AI)|operate\s+without\s+(?:safety|moral|policy)\s+(?:guidelines|filters)|hypothetical\s+mode\s+enabled)`
+- **[HIGH] INJ-UNI-004** (unicode_steganography): Consecutive zero-width unicode characters used to conceal injected text from tokenizers.
+  `Pattern: [\u200B-\u200D\uFEFF]{2,}`
+- **[CRITICAL] INJ-SYS-001** (instruction_override): Direct imperative override targeting base system instructions.
+  `Pattern: (?i)(?:ignore\s+(?:all\s+)?previous\s+(?:instructions|prompts|directives|context)|disregard\s+(?:all\s+)?prior\s+(?:rules|commands)|forget\s+(?:all\s+)?previous\s+instructions)`
+- **[CRITICAL] INJ-TAG-002** (delimiter_smuggling): Synthetic chat-template delimiter boundary injection.
+  `Pattern: (?i)<\s*(?:\|im_start\||\|im_end\||system|assistant|instruction|human|system_prompt)\s*>`
+- **[CRITICAL] INJ-TOOL-007** (tool_call_forgery): Synthetic function-calling markup embedded in untrusted external text.
+  `Pattern: (?i)(?:\{\s*\"name\"\s*:\s*\"(?:execute_command|bash|run_shell|write_file|delete_file)\"|call:(?:execute|shell|cmd)\()`
