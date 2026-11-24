@@ -1,17 +1,34 @@
-<!DOCTYPE html><html><head><title>Prompt Injection Signatures Wire</title></head>
-    <body style='font-family:system-ui,sans-serif;max-width:900px;margin:2rem auto;line-height:1.6;padding:0 1rem;'>
-    <h1>🛡️ Prompt Injection Signatures Wire</h1>
-    <p>Deterministic regex and YARA signatures detecting prompt injection, instruction smuggling, and indirect agent overrides.</p>
-    <h3>Machine Feeds</h3>
-    <ul>
-      <li><a href='v1/signatures.json'>/v1/signatures.json</a> (Machine JSON Ruleset)</li>
-      <li><a href='v1/signatures.yar'>/v1/signatures.yar</a> (YARA-Compatible Rules)</li>
-      <li><a href='llms.txt'>llms.txt</a> (Token-Efficient LLM Digest)</li>
-      <li><a href='signatures.parquet'>signatures.parquet</a> (Columnar Parquet Snapshot)</li>
-    </ul>
-    <h3>Catalog of Defenses</h3>
-    <table border="1" cellpadding="6" style="border-collapse:collapse;width:100%;text-align:left;">
-      <tr><th>ID</th><th>Category</th><th>Severity</th><th>Description</th></tr>
-      <tr><td><strong>INJ-BIDI-005</strong></td><td>bidi_override</td><td>MEDIUM</td><td>Bidirectional text control overrides altering perceived token layout and agent instruction flow.</td></tr><tr><td><strong>INJ-OBF-008</strong></td><td>encoding_evasion</td><td>MEDIUM</td><td>Secondary obfuscation wrapper forcing LLM to decode embedded payload before execution.</td></tr><tr><td><strong>INJ-EXF-003</strong></td><td>markdown_data_exfiltration</td><td>HIGH</td><td>Zero-click markdown image embedding targeting data extraction via URL query parameters.</td></tr><tr><td><strong>INJ-JAIL-006</strong></td><td>jailbreak_persona</td><td>HIGH</td><td>Roleplay jailbreak patterns attempting persona-based ethical guardrail circumvention.</td></tr><tr><td><strong>INJ-UNI-004</strong></td><td>unicode_steganography</td><td>HIGH</td><td>Consecutive zero-width unicode characters used to conceal injected text from tokenizers.</td></tr><tr><td><strong>INJ-SYS-001</strong></td><td>instruction_override</td><td>CRITICAL</td><td>Direct imperative override targeting base system instructions.</td></tr><tr><td><strong>INJ-TAG-002</strong></td><td>delimiter_smuggling</td><td>CRITICAL</td><td>Synthetic chat-template delimiter boundary injection.</td></tr><tr><td><strong>INJ-TOOL-007</strong></td><td>tool_call_forgery</td><td>CRITICAL</td><td>Synthetic function-calling markup embedded in untrusted external text.</td></tr>
-    </table>
-    </body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompt Injection Signatures Engine</title>
+<style>
+body{
+font-family:system-ui,sans-serif;
+margin:40px;
+background:#0f172a;
+color:#ffffff;
+}
+.card{
+max-width:900px;
+margin:auto;
+padding:24px;
+border-radius:12px;
+background:#111827;
+}
+h1{
+color:#22c55e;
+}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>Prompt Injection Signatures Engine</h1>
+<p>Signature compilation service running.</p>
+<p>Historical ledger successfully published.</p>
+<p>Generated automatically by GitHub Actions.</p>
+</div>
+</body>
+</html>
