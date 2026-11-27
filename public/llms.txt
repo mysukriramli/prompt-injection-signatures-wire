@@ -1,5 +1,5 @@
 # Prompt Injection Signatures Wire
-> Last Sync: 2026-11-26T18:37:55.926194+00:00 UTC
+> Last Sync: 2026-11-27T18:26:39.576249+00:00 UTC
 > Deterministic sanitization ruleset for autonomous agents (Zero LLM tokens burned for input triage).
 
 ## Active Injection Detection Signatures
